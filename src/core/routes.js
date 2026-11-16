@@ -9,4 +9,4 @@ export const PAGES = {
 
 // Public URL of the privacy policy (content lives in PRIVACY.md). Fill in after publishing, e.g. a GitHub Pages site.
 // If left empty, the consent screen shows no link.
-export const PRIVACY_POLICY_URL = "";
+export const PRIVACY_POLICY_URL = "https://phucdevnew.github.io/daily-visit-counter/privacy/";

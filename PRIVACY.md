@@ -1,14 +1,12 @@
+---
+layout: default
+title: Privacy Policy — Daily Visit Counter
+permalink: /privacy/
+---
+
 # Privacy Policy — Daily Visit Counter
 
 _Last updated: 2026-11-16_
-
-> **Before publishing:** host this file at a public address (for example GitHub Pages), then enter that address in
-> `PRIVACY_POLICY_URL` in `src/core/routes.js` and in the privacy policy field of the Chrome Web Store Developer Dashboard.
-> Note: the email in the Contact section will be **public** along with the policy. Delete this note when publishing.
-
-Daily Visit Counter is a Chrome extension that counts how often you visit websites that distract you, so you can
-see your habits and limit them. **All data stays on your computer. The extension has no server and does not send
-your data anywhere.**
 
 ## What the extension records
 While tracking is turned on and you open a website from **your own tracked list** (for example `facebook.com`),

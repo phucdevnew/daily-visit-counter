@@ -1,0 +1,16 @@
+# GitHub Pages config: publishes only the privacy policy (and README as the home page).
+# Everything else is excluded from the site; it stays in the repository as usual.
+theme: jekyll-theme-minimal
+title: Daily Visit Counter
+description: Chrome extension that counts and limits visits to distracting websites.
+exclude:
+  - _locales
+  - assets
+  - dist
+  - docs
+  - node_modules
+  - scripts
+  - src
+  - tests
+  - manifest.json
+  - package.json
