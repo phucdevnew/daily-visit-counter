@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/src/ui/base.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <section class="hero">
+    <div class="topline">
+      <div class="eyebrow" id="date"></div>
+      <div class="status" id="status"><i class="dot"></i><span id="statusText"></span></div>
+    </div>
+    <div class="big"><span id="total">0</span><small data-i18n="popup.today_label"></small></div>
+    <button class="toggle" id="toggle"></button>
+    <div class="auto" id="auto" hidden></div>
+  </section>
+  <div class="chips">
+    <span class="chip" id="sitesChip"></span>
+    <span class="chip" id="topChip" hidden></span>
+  </div>
+  <ul id="list"></ul>
+  <div class="empty" id="empty" hidden><span class="emoji">🌤️</span><span data-i18n="popup.empty"></span></div>
+  <footer>
+    <button id="stats" data-i18n="nav.stats"></button>
+    <button id="settings" data-i18n="nav.settings"></button>
+  </footer>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

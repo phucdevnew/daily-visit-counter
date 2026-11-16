@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="consent.page_title">Privacy</title>
+  <link rel="stylesheet" href="/src/ui/base.css">
+  <link rel="stylesheet" href="consent.css">
+</head>
+<body class="page">
+  <main class="consent">
+    <div class="badge" aria-hidden="true">🔒</div>
+
+    <!-- State 1: terms (ask for consent, or review only if already agreed). Hidden until the state is known to avoid flicker. -->
+    <section id="ask" hidden>
+      <h1 data-i18n="consent.h1"></h1>
+      <p class="intro" data-i18n="consent.intro"></p>
+
+      <ul class="points">
+        <li><span class="ic" aria-hidden="true">📝</span><div><h2 data-i18n="consent.collect_title"></h2><p id="collectBody"></p></div></li>
+        <li><span class="ic" aria-hidden="true">🚫</span><div><h2 data-i18n="consent.not_title"></h2><p data-i18n="consent.not_body"></p></div></li>
+        <li><span class="ic" aria-hidden="true">🎯</span><div><h2 data-i18n="consent.use_title"></h2><p data-i18n="consent.use_body"></p></div></li>
+        <li><span class="ic" aria-hidden="true">💾</span><div><h2 data-i18n="consent.store_title"></h2><p data-i18n="consent.store_body"></p></div></li>
+        <li><span class="ic" aria-hidden="true">🎛️</span><div><h2 data-i18n="consent.control_title"></h2><p data-i18n="consent.control_body"></p></div></li>
+      </ul>
+
+      <a class="policy" id="policyLink" hidden target="_blank" rel="noopener" data-i18n="consent.policy_link"></a>
+
+      <div class="actions" id="askActions">
+        <button class="primary" id="agree" data-i18n="consent.agree"></button>
+        <button class="ghost" id="decline" data-i18n="consent.decline"></button>
+      </div>
+      <p class="note" id="declinedNote" hidden data-i18n="consent.declined_note"></p>
+
+      <!-- Review mode: already agreed, terms are read-only -->
+      <p class="note" id="alreadyNote" hidden></p>
+      <div class="actions" id="reviewActions" hidden>
+        <button class="ghost" id="closeReview" data-i18n="consent.close"></button>
+      </div>
+    </section>
+
+    <!-- State 2: consent given -->
+    <section id="done" hidden>
+      <h1 id="doneTitle"></h1>
+      <p class="intro" id="doneBody"></p>
+      <div class="actions">
+        <button class="ghost" id="close" data-i18n="consent.close"></button>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="consent.js"></script>
+</body>
+</html>

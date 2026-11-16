@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="stats.page_title">Visit statistics</title>
+  <link rel="stylesheet" href="/src/ui/base.css">
+  <link rel="stylesheet" href="stats.css">
+</head>
+<body class="page">
+  <main class="shell">
+    <nav class="pagenav">
+      <a href="/src/pages/stats/stats.html" class="active" data-i18n="nav.stats"></a>
+      <a href="/src/pages/settings/settings.html" data-i18n="nav.settings"></a>
+    </nav>
+
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">📈</div>
+        <div>
+          <h1 data-i18n="stats.page_title"></h1>
+          <p data-i18n="stats.tagline"></p>
+        </div>
+      </div>
+      <nav class="seg" id="tabs">
+        <button data-p="day" class="active" data-i18n="period.day"></button>
+        <button data-p="week" data-i18n="period.week"></button>
+        <button data-p="month" data-i18n="period.month"></button>
+        <button data-p="year" data-i18n="period.year"></button>
+      </nav>
+    </header>
+
+    <div class="nav">
+      <button class="icon-btn" id="prev" data-i18n-title="stats.prev" data-i18n-aria="stats.prev">‹</button>
+      <div class="range"><strong id="rangeTitle"></strong><span id="rangeSub"></span></div>
+      <button class="icon-btn" id="next" data-i18n-title="stats.next" data-i18n-aria="stats.next">›</button>
+      <input type="date" id="date" data-i18n-aria="stats.pickdate">
+      <button class="ghost" id="today" data-i18n="stats.today"></button>
+      <button class="ghost" id="export" data-i18n="stats.export" data-i18n-title="stats.export_title"></button>
+    </div>
+
+    <section class="card goal" id="goalCard">
+      <div class="goal-main">
+        <span class="flame" id="gIcon" aria-hidden="true">🔥</span>
+        <div><b id="gTitle"></b><span id="gSub"></span></div>
+      </div>
+      <div class="goal-meter" id="gMeter" hidden>
+        <div class="track"><div class="fill" id="gFill"></div></div>
+        <span id="gText"></span>
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="card stat"><span data-i18n="card.total"></span><b id="sTotal">0</b><em class="delta" id="sDelta"></em></div>
+      <div class="card stat"><span data-i18n="card.sites"></span><b id="sSites">0</b></div>
+      <div class="card stat"><span data-i18n="card.avg"></span><b id="sAvg">0</b></div>
+      <div class="card stat"><span data-i18n="card.top"></span><b id="sTop" class="small">—</b></div>
+    </section>
+
+    <section class="card" id="chartCard" hidden>
+      <h2 data-i18n="stats.trend"></h2>
+      <div class="chart" id="chart"></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="stats.ranking"></h2>
+      <ul id="list"></ul>
+      <div class="empty" id="empty" hidden><span class="emoji">🗂️</span><span data-i18n="stats.empty"></span></div>
+    </section>
+
+    <footer>
+      <button class="danger" id="clear" data-i18n="stats.clear"></button>
+    </footer>
+  </main>
+  <script type="module" src="stats.js"></script>
+</body>
+</html>

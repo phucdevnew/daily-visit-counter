@@ -1,0 +1,39 @@
+/* The popup does not need to reserve space for the scrollbar (common.css enables it for tab pages); otherwise an empty strip would show on the right. */
+html { scrollbar-gutter: auto; overflow-x: hidden; }
+body { width: 340px; }
+.hero { padding: 20px 18px 18px; background: var(--grad); color: #fff; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .8; }
+.big { display: flex; align-items: baseline; gap: 10px; margin-top: 4px; }
+.big span { font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.big small { font-size: 13px; opacity: .85; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px 14px 0; }
+.chip { padding: 4px 10px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+.chip b { font-weight: 700; color: var(--text); }
+.topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.status { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, .5); }
+.status.on .dot { background: #4ade80; box-shadow: 0 0 0 3px rgba(74, 222, 128, .3); }
+/* Start button = green, Stop = red: strong contrast against the purple background so the state is clear at a glance. */
+.toggle {
+  width: 100%; margin-top: 16px; padding: 13px; border: 0; border-radius: 14px;
+  font-size: 15px; font-weight: 800; letter-spacing: .01em; color: #fff;
+  background: linear-gradient(180deg, #34d399, #059669);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, .55), inset 0 1px 0 rgba(255, 255, 255, .35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+  transition: transform .1s, filter .15s, box-shadow .15s;
+}
+.toggle:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.toggle:active { transform: translateY(0) scale(.98); }
+.toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.toggle.running {
+  background: linear-gradient(180deg, #fb7185, #e11d48);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, .55), inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.auto { margin-top: 10px; font-size: 12px; text-align: center; opacity: .85; }
+#list { padding: 8px; max-height: 300px; overflow-y: auto; }
+footer { display: flex; gap: 8px; padding: 4px 12px 14px; }
+footer button {
+  flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); font-weight: 600; transition: all .15s;
+}
+footer button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }

@@ -1,0 +1,15 @@
+body { min-height: 100vh; display: grid; place-items: center; background: radial-gradient(900px 500px at 50% -10%, var(--accent-soft), transparent), var(--bg); }
+.nudge { width: min(440px, calc(100vw - 32px)); padding: 36px 28px 28px; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow); }
+.badge { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: var(--grad); box-shadow: 0 8px 20px rgba(91, 91, 240, .35); }
+h1 { margin: 0 0 18px; font-size: 20px; letter-spacing: -.01em; }
+.target { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); font-size: 16px; }
+.count { margin: 16px 0 0; color: var(--muted); }
+.count b { color: var(--text); }
+.warn { margin: 10px 0 0; padding: 8px 12px; border-radius: 10px; background: rgba(229, 72, 77, .12); color: #e5484d; font-weight: 600; font-size: 13px; }
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.primary { padding: 12px; border: 0; border-radius: 12px; background: var(--grad); color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(91, 91, 240, .35); }
+.primary:hover { filter: brightness(1.08); }
+.ghost { padding: 11px; border-radius: 12px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-weight: 600; transition: all .15s; }
+.ghost:not(:disabled):hover { border-color: var(--accent); color: var(--accent); }
+.ghost:disabled { opacity: .6; cursor: default; }
+[hidden] { display: none !important; }

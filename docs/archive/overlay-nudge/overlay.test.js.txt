@@ -1,0 +1,43 @@
+// showNudgeOverlay is serialized by chrome.scripting.executeScript via toString() and run inside the WEB PAGE,
+// so it must not reference anything outside the function (imports, module constants...). This test runs the function in
+// a sandbox with only a few fake globals: if it uses an outer variable, a ReferenceError is thrown.
+
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { test } from "node:test";
+import vm from "node:vm";
+import { showNudgeOverlay } from "../src/content/overlay.js";
+
+// "Swallow-everything" object: property access and function calls both return itself.
+const anything = () => new Proxy(function () {}, {
+  get: (_, k) => (k === Symbol.toPrimitive ? () => "" : anything()),
+  set: () => true,
+  apply: () => anything(),
+  construct: () => anything(),
+});
+
+test("overlay.js imports nothing (the function must be self-contained)", () => {
+  const source = readFileSync(new URL("../src/content/overlay.js", import.meta.url), "utf8");
+  assert.equal(/^\s*import\s/m.test(source), false);
+});
+
+test("showNudgeOverlay runs when detached from its module (uses no outer variables)", () => {
+  const sandbox = {
+    window: {},
+    document: anything(),
+    chrome: anything(),
+    MutationObserver: anything(),
+    setTimeout: () => 0,
+    setInterval: () => 0,
+    clearInterval: () => {},
+  };
+  const opts = {
+    site: "facebook.com",
+    n: 2,
+    warn: "limit reached",
+    seconds: 3,
+    text: { h1: "H1", count: "Visit <b>3</b> today.", back: "Go back", go: "Proceed anyway", goWait: "Proceed anyway ({n})" },
+  };
+  assert.doesNotThrow(() => vm.runInNewContext(`(${showNudgeOverlay.toString()})(opts)`, { ...sandbox, opts }));
+  assert.equal(sandbox.window.__dvcNudgeActive, true); // duplicate-injection guard flag has been set
+});

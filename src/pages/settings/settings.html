@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="settings.page_title">Settings</title>
+  <link rel="stylesheet" href="/src/ui/base.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body class="page">
+  <div class="shell">
+    <nav class="pagenav">
+      <a href="/src/pages/stats/stats.html" data-i18n="nav.stats"></a>
+      <a href="/src/pages/settings/settings.html" class="active" data-i18n="nav.settings"></a>
+    </nav>
+
+    <div class="layout">
+      <!-- Left menu: generated automatically from the <section class="panel"> elements below -->
+      <aside class="sidenav" id="sidenav" data-i18n-aria="settings.aria_nav"></aside>
+
+      <div class="content">
+        <!--
+          HOW TO ADD A NEW SETTINGS SECTION:
+          1. Add a <section class="panel" hidden data-section="..." data-icon="..." data-title-key="sec.xxx"> like the ones below,
+             and add the key "sec.xxx" (plus any other strings) to src/i18n/vi.js and en.js.
+          2. Write that section's logic in src/pages/settings/sections/<name>.js (export an init function) and call it from settings.js.
+          The left menu picks up the new section automatically. Each setting row uses <div class="setting"> (label on the left, control on the right).
+        -->
+
+        <section class="panel" hidden data-section="sites" data-icon="🌐" data-title-key="sec.sites">
+          <header class="phead">
+            <h1 data-i18n="sec.sites"></h1>
+            <p data-i18n="sites.desc"></p>
+          </header>
+
+          <div class="group">
+            <form id="siteForm" class="siteform">
+              <input id="siteInput" data-i18n-ph="sites.placeholder" autocomplete="off" spellcheck="false">
+              <button type="submit" class="primary" data-i18n="sites.add"></button>
+            </form>
+            <p class="hint" id="siteHint" hidden></p>
+            <div class="chips" id="siteChips"></div>
+          </div>
+          <p class="note" data-i18n="sites.note"></p>
+        </section>
+
+        <section class="panel" hidden data-section="schedule" data-icon="⏰" data-title-key="sec.schedule">
+          <header class="phead">
+            <h1 data-i18n="sec.schedule"></h1>
+            <p data-i18n="sch.desc"></p>
+          </header>
+
+          <div class="group">
+            <div class="setting" id="rowStart">
+              <div class="meta"><b data-i18n="sch.start_title"></b><span data-i18n="sch.start_desc"></span></div>
+              <div class="ctrl">
+                <input type="time" id="schStart" data-i18n-aria="sch.aria_start">
+                <label class="switch"><input type="checkbox" id="schStartOn" data-i18n-aria="sch.aria_start_on"><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="setting" id="rowEnd">
+              <div class="meta"><b data-i18n="sch.end_title"></b><span data-i18n="sch.end_desc"></span></div>
+              <div class="ctrl">
+                <input type="time" id="schEnd" data-i18n-aria="sch.aria_end">
+                <label class="switch"><input type="checkbox" id="schEndOn" data-i18n-aria="sch.aria_end_on"><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="setting stack" id="rowDays">
+              <div class="meta"><b data-i18n="sch.days_title"></b><span data-i18n="sch.days_desc"></span></div>
+              <div class="days" id="schDays">
+                <button type="button" data-d="1" data-i18n="day.1"></button>
+                <button type="button" data-d="2" data-i18n="day.2"></button>
+                <button type="button" data-d="3" data-i18n="day.3"></button>
+                <button type="button" data-d="4" data-i18n="day.4"></button>
+                <button type="button" data-d="5" data-i18n="day.5"></button>
+                <button type="button" data-d="6" data-i18n="day.6"></button>
+                <button type="button" data-d="0" data-i18n="day.0"></button>
+              </div>
+            </div>
+            <p class="hint" id="schHint" hidden></p>
+          </div>
+          <p class="note" data-i18n="sch.note"></p>
+        </section>
+
+        <section class="panel" hidden data-section="limits" data-icon="🎯" data-title-key="sec.limits">
+          <header class="phead">
+            <h1 data-i18n="sec.limits"></h1>
+            <p data-i18n="lim.desc"></p>
+          </header>
+
+          <div class="group">
+            <div class="setting">
+              <div class="meta"><b data-i18n="lim.total_title"></b><span data-i18n="lim.total_desc"></span></div>
+              <div class="ctrl"><input type="number" id="limTotal" min="0" max="9999" step="1" inputmode="numeric"><span class="unit" data-i18n="lim.unit_visits"></span></div>
+            </div>
+            <div class="setting">
+              <div class="meta"><b data-i18n="lim.site_title"></b><span data-i18n="lim.site_desc"></span></div>
+              <div class="ctrl"><input type="number" id="limSite" min="0" max="9999" step="1" inputmode="numeric"><span class="unit" data-i18n="lim.unit_visits"></span></div>
+            </div>
+            <label class="setting">
+              <div class="meta"><b data-i18n="lim.notify_title"></b><span data-i18n="lim.notify_desc"></span></div>
+              <span class="switch"><input type="checkbox" id="limNotify"><span class="slider"></span></span>
+            </label>
+          </div>
+
+          <div class="group gap">
+            <label class="setting">
+              <div class="meta"><b data-i18n="lim.nudge_title"></b><span data-i18n="lim.nudge_desc"></span></div>
+              <span class="switch"><input type="checkbox" id="limNudge"><span class="slider"></span></span>
+            </label>
+            <div class="setting" id="rowSeconds">
+              <div class="meta"><b data-i18n="lim.wait_title"></b><span data-i18n="lim.wait_desc"></span></div>
+              <div class="ctrl"><input type="number" id="limSeconds" min="0" max="60" step="1" inputmode="numeric"><span class="unit" data-i18n="lim.unit_sec"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" hidden data-section="general" data-icon="🌍" data-title-key="sec.general">
+          <header class="phead">
+            <h1 data-i18n="sec.general"></h1>
+            <p data-i18n="gen.desc"></p>
+          </header>
+
+          <div class="group">
+            <div class="setting">
+              <div class="meta"><b data-i18n="gen.lang_title"></b><span data-i18n="gen.lang_desc"></span></div>
+              <div class="ctrl">
+                <select id="langSelect">
+                  <option value="auto" data-i18n="gen.lang_auto"></option>
+                  <option value="vi">Tiếng Việt</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" hidden data-section="privacy" data-icon="🔒" data-title-key="sec.privacy">
+          <header class="phead">
+            <h1 data-i18n="sec.privacy"></h1>
+            <p data-i18n="priv.desc"></p>
+          </header>
+
+          <div class="group">
+            <div class="setting">
+              <div class="meta"><b data-i18n="priv.status_title"></b><span id="privStatus"></span></div>
+              <div class="ctrl">
+                <button type="button" class="btn" id="privReview"></button>
+                <button type="button" class="btn danger" id="privWithdraw" data-i18n="priv.withdraw"></button>
+              </div>
+            </div>
+            <div class="setting">
+              <div class="meta"><b data-i18n="priv.delete_title"></b><span data-i18n="priv.delete_desc"></span></div>
+              <div class="ctrl"><button type="button" class="btn danger" id="privDelete" data-i18n="priv.delete_btn"></button></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="settings.js"></script>
+</body>
+</html>

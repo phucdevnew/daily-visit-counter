@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="nudge.page_title">Hold on…</title>
+  <link rel="stylesheet" href="/src/ui/base.css">
+  <link rel="stylesheet" href="nudge.css">
+</head>
+<body>
+  <main class="nudge">
+    <div class="badge" aria-hidden="true">✋</div>
+    <h1 data-i18n="nudge.h1"></h1>
+    <div class="target"><span id="icon"></span><b id="site"></b></div>
+    <p class="count" id="count"></p>
+    <p class="warn" id="warn" hidden></p>
+    <div class="actions">
+      <button class="primary" id="back" data-i18n="nudge.back"></button>
+      <button class="ghost" id="go" disabled data-i18n="nudge.go"></button>
+    </div>
+  </main>
+  <script type="module" src="nudge.js"></script>
+</body>
+</html>
