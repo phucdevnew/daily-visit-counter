@@ -9,6 +9,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const root = resolve(import.meta.dirname, "..");
+const extRoot = join(root, "extension"); // the Chrome extension itself (load THIS folder with "Load unpacked")
 const errors = [];
 const warnings = [];
 const fail = (msg) => errors.push(msg);
@@ -25,12 +26,23 @@ function walk(dir, out = []) {
   return out;
 }
 
-const srcFiles = walk(join(root, "src"));
+const srcFiles = walk(join(extRoot, "src"));
 const jsFiles = srcFiles.filter((f) => f.endsWith(".js"));
 const htmlFiles = srcFiles.filter((f) => f.endsWith(".html"));
 
+// ---- 0. reserved names ----
+// Chrome refuses to load an extension folder that contains any file or directory whose name starts with "_"
+// (except _locales and _metadata). Files like Jekyll's _config.yml must therefore live OUTSIDE extension/.
+for (const file of walk(extRoot)) {
+  for (const part of relative(extRoot, file).split(/[\\/]/)) {
+    if (part.startsWith("_") && part !== "_locales" && part !== "_metadata") {
+      fail(`${rel(file)}: names starting with "_" are reserved by Chrome ("${part}"); move it out of extension/`);
+    }
+  }
+}
+
 // ---- 1. manifest ----
-const manifest = JSON.parse(read(join(root, "manifest.json")));
+const manifest = JSON.parse(read(join(extRoot, "manifest.json")));
 const manifestPaths = [
   ...Object.values(manifest.icons ?? {}),
   manifest.background?.service_worker,
@@ -38,7 +50,7 @@ const manifestPaths = [
   ...Object.values(manifest.action?.default_icon ?? {}),
 ].filter(Boolean);
 for (const p of manifestPaths) {
-  if (!existsSync(join(root, p))) fail(`manifest.json: not found: "${p}"`);
+  if (!existsSync(join(extRoot, p))) fail(`extension/manifest.json: not found: "${p}"`);
 }
 
 // Design decision: do NOT request access to any website and do NOT inject code into web pages. This reduces the chance of
@@ -52,13 +64,13 @@ for (const p of ["scripting", "tabs", "history", "<all_urls>"]) {
 }
 
 // Every page in PAGES must exist.
-const { PAGES } = await import(pathToFileURL(join(root, "src/core/routes.js")));
+const { PAGES } = await import(pathToFileURL(join(extRoot, "src/core/routes.js")));
 for (const [name, p] of Object.entries(PAGES)) {
-  if (!existsSync(join(root, p))) fail(`routes.js: PAGES.${name} points to "${p}" which does not exist`);
+  if (!existsSync(join(extRoot, p))) fail(`routes.js: PAGES.${name} points to "${p}" which does not exist`);
 }
 
 // Names/descriptions of the form __MSG_xxx__ must exist in EVERY locale; description max 132 characters, name max 75 (Chrome Web Store limits).
-const localesDir = join(root, "_locales");
+const localesDir = join(extRoot, "_locales");
 const localeNames = existsSync(localesDir) ? readdirSync(localesDir) : [];
 if (manifest.default_locale && !localeNames.includes(manifest.default_locale)) {
   fail(`manifest.json: default_locale "${manifest.default_locale}" has no folder in _locales/`);
@@ -82,7 +94,7 @@ for (const file of htmlFiles) {
   for (const m of html.matchAll(/<(?:script|link)\b[^>]*?(?:src|href)="([^"]+)"/g)) {
     const ref = m[1];
     if (/^(https?:|data:|#)/.test(ref)) continue;
-    const target = ref.startsWith("/") ? join(root, ref) : resolve(dirname(file), ref);
+    const target = ref.startsWith("/") ? join(extRoot, ref) : resolve(dirname(file), ref);
     if (!existsSync(target)) fail(`${rel(file)}: not found: "${ref}"`);
   }
 }
@@ -122,7 +134,7 @@ for (const file of jsFiles) {
 // ---- 4. i18n ----
 const dict = {};
 for (const lang of ["vi", "en"]) {
-  dict[lang] = (await import(pathToFileURL(join(root, "src/i18n", `${lang}.js`)))).default;
+  dict[lang] = (await import(pathToFileURL(join(extRoot, "src/i18n", `${lang}.js`)))).default;
 }
 const viKeys = new Set(Object.keys(dict.vi));
 const enKeys = new Set(Object.keys(dict.en));

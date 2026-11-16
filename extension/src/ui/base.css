@@ -1,4 +1,10 @@
 :root {
+  /* Corner radii: one scale for the whole UI (small and subtle, not square, not pill-shaped). */
+  --r-xs: 3px;   /* progress bars, tiny buttons */
+  --r-sm: 6px;   /* buttons, inputs, chips, small icons */
+  --r-md: 8px;   /* list rows, segmented control, large buttons, logo tiles */
+  --r-lg: 12px;  /* cards, setting groups */
+  --r-xl: 14px;  /* large centered cards (consent, reminder) */
   --bg: #f4f5fb;
   --surface: #ffffff;
   --surface-2: #f0f1f8;
@@ -55,17 +61,18 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 /* Site row (shared by popup + statistics page) */
 .icon {
-  position: relative; flex: none; width: 32px; height: 32px; border-radius: 9px;
+  background: var(--tile, var(--surface-2));
+  position: relative; flex: none; width: 32px; height: 32px; border-radius: var(--r-sm);
   display: grid; place-items: center; overflow: hidden;
   font-weight: 700; font-size: 14px; color: #fff; text-transform: uppercase;
 }
 .icon img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 5px; background: var(--surface-2); object-fit: contain; }
-.row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; transition: background .15s; }
+.row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r-md); transition: background .15s; }
 .row:hover { background: var(--surface-2); }
 .row .info { flex: 1; min-width: 0; }
 .row .host { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.row .track { height: 5px; margin-top: 6px; border-radius: 99px; background: var(--bar-track); overflow: hidden; }
-.row .fill { height: 100%; border-radius: 99px; background: var(--grad); transition: width .4s ease; }
+.row .track { height: 5px; margin-top: 6px; border-radius: var(--r-xs); background: var(--bar-track); overflow: hidden; }
+.row .fill { height: 100%; border-radius: var(--r-xs); background: var(--grad); transition: width .4s ease; }
 .row .count { font-weight: 700; font-variant-numeric: tabular-nums; }
 .row .sub { display: block; font-size: 11px; font-weight: 500; color: var(--muted); text-align: right; }
 .empty { text-align: center; color: var(--muted); padding: 28px 12px; }

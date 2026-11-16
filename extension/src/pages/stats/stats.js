@@ -10,7 +10,7 @@ import {
   clearVisits, getLimits, getSites, getVisits, isUiRelevant, onStorageChanged,
 } from "../../core/storage.js";
 import { currentLocale, i18nReady, t } from "../../i18n/index.js";
-import { $, downloadText, siteRow } from "../../ui/dom.js";
+import { $, downloadText, siteIcon } from "../../ui/dom.js";
 
 const dateInput = $("date");
 const tabs = $("tabs");
@@ -109,6 +109,39 @@ function renderGoal(visits, sites, limits) {
   $("gText").textContent = text;
 }
 
+// ---- Ranking: a proportional share bar plus a compact list ----
+// Each of the top sites gets its own clearly different color (--c1..--c7, defined in stats.css); the rest share a
+// neutral gray. The same color marks the site's segment in the bar and its dot in the list.
+const PALETTE_SIZE = 7;
+const colorOf = (i) => (i < PALETTE_SIZE ? `var(--c${i + 1})` : "var(--c-rest)");
+
+function renderRanking(entries, sum) {
+  $("share").replaceChildren(...entries.map(([host, n], i) => {
+    const segment = document.createElement("span");
+    segment.style.flex = `${n} 1 0%`; // width proportional to the visit count
+    segment.style.background = colorOf(i);
+    segment.title = `${host}: ${n}`;
+    return segment;
+  }));
+  $("list").replaceChildren(...entries.map(([host, n], i) => {
+    const li = document.createElement("li");
+    const dot = document.createElement("i");
+    dot.className = "dot";
+    dot.style.background = colorOf(i);
+    const name = document.createElement("span");
+    name.className = "name";
+    name.textContent = host;
+    const count = document.createElement("span");
+    count.className = "count";
+    count.textContent = n;
+    const pct = document.createElement("span");
+    pct.className = "pct";
+    pct.textContent = `${Math.round((n / sum) * 100)}%`;
+    li.append(dot, siteIcon(host), name, count, pct);
+    return li;
+  }));
+}
+
 // ---- Rendering the page ----
 async function render() {
   const [visits, sites, limits] = await Promise.all([getVisits(), getSites(), getLimits()]);
@@ -117,7 +150,6 @@ async function render() {
   const [startKey, endKey] = [keyOf(start), keyOf(end)];
 
   const { entries, sum } = aggregate(visits, sites, startKey, endKey);
-  const max = entries.length ? entries[0][1] : 1;
   const elapsed = elapsedDays(start, end);
 
   $("rangeTitle").textContent = titleFor(start, end);
@@ -134,14 +166,7 @@ async function render() {
 
   $("empty").hidden = entries.length > 0;
   $("export").disabled = entries.length === 0; // nothing to export for an empty period
-  $("list").replaceChildren(...entries.map(([host, n], i) => {
-    const li = siteRow(host, n, max, `${Math.round((n / sum) * 100)}%`);
-    const rank = document.createElement("div");
-    rank.className = "rank";
-    rank.textContent = i + 1;
-    li.prepend(rank);
-    return li;
-  }));
+  renderRanking(entries, sum);
 
   $("next").disabled = endKey >= todayKey();
 }

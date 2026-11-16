@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { CONSENT_VERSION, isConsentValid, newConsent } from "../src/core/consent.js";
+import { CONSENT_VERSION, isConsentValid, newConsent } from "../extension/src/core/consent.js";
 
 test("newConsent records the current version and timestamp", () => {
   assert.deepEqual(newConsent(123), { version: CONSENT_VERSION, at: 123 });

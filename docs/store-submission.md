@@ -5,7 +5,7 @@ Internal document (not packaged into the extension). Content to paste into the D
 
 ## Before you submit
 
-- [ ] Host [PRIVACY.md](../PRIVACY.md) at a public address, and enter it in `PRIVACY_POLICY_URL` (`src/core/routes.js`) and in the *Privacy policy* field in the Dashboard.
+- [ ] Host [PRIVACY.md](../PRIVACY.md) at a public address, and enter it in `PRIVACY_POLICY_URL` (`extension/src/core/routes.js`) and in the *Privacy policy* field in the Dashboard.
 - [ ] Run `npm run verify` then `npm run package` → upload `dist/daily-visit-counter-<version>.zip`.
 - [ ] Test the zip in a clean Chrome profile: install, agree, turn on tracking, confirm visits are counted, and confirm counting still works after restarting Chrome.
 - [ ] Screenshots and promo tile images (see the end of this file).
@@ -18,7 +18,7 @@ Internal document (not packaged into the extension). Content to paste into the D
 
 **Name:** Daily Visit Counter
 
-**Summary (≤132 characters)** — taken from `_locales/en/messages.json`:
+**Summary (≤132 characters)** — taken from `extension/extension/_locales/en/messages.json`:
 > Count and limit how often you visit distracting websites. Private: all data stays on your device.
 
 **Category:** Productivity

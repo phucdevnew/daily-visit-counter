@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { DEFAULT_LIMITS, anyLimitReached, limitAlert, normalizeLimits, nudgeWarning } from "../src/core/limits.js";
+import { DEFAULT_LIMITS, anyLimitReached, limitAlert, normalizeLimits, nudgeWarning } from "../extension/src/core/limits.js";
 
 const limits = { ...DEFAULT_LIMITS, total: 5, perSite: 3 };
 

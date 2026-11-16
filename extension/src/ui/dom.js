@@ -1,18 +1,13 @@
 // Shared DOM utilities for the UI pages.
 
+import { iconUrl, resolveFavicon } from "./favicon.js";
+
 export const $ = (id) => document.getElementById(id);
 
 /** Show/hide an error line (an element with the hidden attribute) with content `msg`; hide it when msg is empty. */
 export function showHint(id, msg) {
   $(id).textContent = msg || "";
   $(id).hidden = !msg;
-}
-
-function faviconUrl(host) {
-  const u = new URL(chrome.runtime.getURL("/_favicon/"));
-  u.searchParams.set("pageUrl", `https://${host}`);
-  u.searchParams.set("size", "32");
-  return u.toString();
 }
 
 function hueOf(str) {
@@ -26,13 +21,18 @@ export function siteIcon(host) {
   const el = document.createElement("div");
   el.className = "icon";
   const h = hueOf(host);
-  el.style.background = `linear-gradient(135deg, hsl(${h} 70% 55%), hsl(${(h + 40) % 360} 70% 45%))`;
+  // Exposed as a CSS variable (see .icon in base.css) so a page can restyle the tile, e.g. a neutral tile on Stats.
+  el.style.setProperty("--tile", `linear-gradient(135deg, hsl(${h} 70% 55%), hsl(${(h + 40) % 360} 70% 45%))`);
   el.textContent = host[0] || "?";
-  const img = document.createElement("img");
-  img.alt = "";
-  img.src = faviconUrl(host);
-  img.onerror = () => img.remove();
-  el.append(img);
+  // The favicon is looked up asynchronously (see favicon.js); until then, and if the browser has none, the tile stays.
+  resolveFavicon(host).then((pageUrl) => {
+    if (!pageUrl) return;
+    const img = document.createElement("img");
+    img.alt = "";
+    img.src = iconUrl(pageUrl);
+    img.onerror = () => img.remove();
+    el.append(img);
+  });
   return el;
 }
 

@@ -1,5 +1,5 @@
 // Minimal fake of `chrome.*` to run the service worker in Node (no browser needed).
-// Usage: const chrome = installChromeMock(); then `await import("../src/background/index.js")`.
+// Usage: const chrome = installChromeMock(); then `await import("../extension/src/background/index.js")`.
 
 function makeEvent() {
   const fns = [];

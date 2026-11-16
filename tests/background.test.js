@@ -5,9 +5,9 @@ import { beforeEach, test } from "node:test";
 import { installChromeMock } from "./helpers/chrome-mock.js";
 
 const chrome = installChromeMock();
-await import("../src/background/index.js");
-const { enqueue } = await import("../src/background/queue.js");
-const { todayKey } = await import("../src/core/dates.js");
+await import("../extension/src/background/index.js");
+const { enqueue } = await import("../extension/src/background/queue.js");
+const { todayKey } = await import("../extension/src/core/dates.js");
 
 const settle = () => new Promise((r) => setTimeout(r, 10)); // let background tasks (badge...) finish
 const flush = async () => { await enqueue(async () => {}); await settle(); };

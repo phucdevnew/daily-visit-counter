@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   DEFAULT_SCHEDULE, eventsBetween, isWorkTime, normalizeSchedule, scheduleActive,
-} from "../src/core/schedule.js";
+} from "../extension/src/core/schedule.js";
 
 // 2026-11-16 is a Monday.
 const both = { ...DEFAULT_SCHEDULE, startOn: true, endOn: true };

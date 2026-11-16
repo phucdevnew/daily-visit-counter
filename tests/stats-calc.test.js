@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { collapse } from "../src/core/counts.js";
-import { keyOf } from "../src/core/dates.js";
+import { collapse } from "../extension/src/core/counts.js";
+import { keyOf } from "../extension/src/core/dates.js";
 import {
   aggregate, buildBuckets, compareWithPrevious, dayMeetsGoal, elapsedDays, goalMeter, goalState, rangeFor,
   shiftAnchor,
-} from "../src/core/stats-calc.js";
+} from "../extension/src/core/stats-calc.js";
 
 // 2026-11-16 is a Monday.
 const D = (y, m, d) => new Date(y, m - 1, d);

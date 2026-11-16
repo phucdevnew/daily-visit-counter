@@ -1,0 +1,120 @@
+/* Stats page — modern minimal: calm surfaces with hairline borders, ONE flat accent color (no gradients, no heavy
+   shadows), soft tinted chips, rounded bars, and small motion. Tokens, radii and page navigation live in base.css. */
+
+.stats { max-width: 760px; }
+
+/* ---------- Header ---------- */
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+h1 { margin: 0; font-size: 24px; font-weight: 650; letter-spacing: -.02em; }
+.tagline { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+/* Period switch: a soft track with a raised active segment */
+.periods { display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--r-md); background: var(--surface-2); }
+.periods button { padding: 6px 14px; border: 0; border-radius: var(--r-sm); background: none; color: var(--muted); font-weight: 500; transition: color .15s, background .15s; }
+.periods button:hover { color: var(--text); }
+.periods button.active { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: 0 1px 2px rgba(23, 26, 43, .1), 0 0 0 1px var(--border); }
+
+/* ---------- Range bar ---------- */
+.range-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.range-nav { display: flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); }
+.range { display: flex; flex-direction: column; min-width: 190px; padding: 0 8px; text-align: center; }
+.range strong { font-size: 14px; font-weight: 600; }
+.range span { font-size: 11px; color: var(--muted); }
+.step { width: 30px; height: 30px; border: 0; border-radius: var(--r-sm); background: none; color: var(--muted); font-size: 18px; line-height: 1; transition: background .15s, color .15s; }
+.step:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
+.step:disabled { opacity: .3; cursor: default; }
+.tools { display: flex; align-items: center; gap: 8px; }
+.text-btn, input[type=date] {
+  padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 13px; color-scheme: light dark;
+}
+.text-btn { color: var(--muted); transition: border-color .15s, color .15s; }
+.text-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.text-btn:disabled { opacity: .4; cursor: default; }
+
+/* ---------- Shared surface ---------- */
+.goal, .figure, .block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+  animation: rise .4s ease both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- Goal ---------- */
+.goal { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 16px; margin-bottom: 12px; }
+.goal-main { display: flex; align-items: center; gap: 12px; }
+.flame { width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--r-md); background: var(--accent-soft); font-size: 18px; }
+.goal-main b { display: block; font-size: 14px; font-weight: 600; }
+.goal-main span:not(.flame), .goal-main a { font-size: 12px; color: var(--muted); }
+.goal-main a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.goal-main a:hover { text-decoration: underline; }
+.goal-meter { flex: 1; min-width: 170px; max-width: 260px; }
+.goal-meter .track { height: 4px; border-radius: var(--r-xs); background: var(--bar-track); overflow: hidden; }
+.goal-meter .fill { height: 100%; border-radius: var(--r-xs); background: var(--accent); transition: width .4s ease; }
+.goal-meter .fill.over { background: #e5484d; }
+.goal-meter span { display: block; margin-top: 6px; font-size: 12px; color: var(--muted); text-align: right; }
+
+/* ---------- Key figures ---------- */
+.figures { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+.figure { min-width: 0; padding: 16px 18px; animation-delay: .05s; }
+.figure > span { display: block; font-size: 12px; color: var(--muted); }
+.figure b { display: block; margin-top: 8px; font-size: 28px; font-weight: 650; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.figure b.small { font-size: 15px; line-height: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Comparison chip with a soft tint */
+.delta { display: inline-block; margin-top: 10px; padding: 2px 8px; border-radius: var(--r-sm); background: var(--surface-2); color: var(--muted); font-style: normal; font-size: 11px; font-weight: 600; }
+.delta:empty { display: none; }
+.delta.good { background: rgba(22, 163, 74, .12); color: #16a34a; }
+.delta.bad { background: rgba(229, 72, 77, .12); color: #e5484d; }
+
+/* ---------- Panels ---------- */
+.block { padding: 18px 20px; margin-bottom: 12px; animation-delay: .1s; }
+.block h2 { margin: 0 0 16px; font-size: 13px; font-weight: 600; color: var(--muted); }
+
+/* Trend chart: soft bars, the highest one (and the hovered one) in full accent */
+.chart { display: flex; align-items: flex-end; gap: 6px; height: 150px; }
+.col { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.col .bar { width: 100%; max-width: 28px; min-height: 3px; border-radius: var(--r-sm) var(--r-sm) var(--r-xs) var(--r-xs); background: var(--bar-track); transition: height .35s ease, background .15s, opacity .15s; }
+.col.has .bar { background: var(--accent); opacity: .3; }
+.col.peak .bar, .col:hover .bar { background: var(--accent); opacity: 1; }
+.col .lbl { height: 12px; font-size: 10px; color: var(--muted); white-space: nowrap; }
+.col .val { height: 12px; font-size: 10px; font-weight: 600; visibility: hidden; }
+.col:hover .val, .col.peak .val { visibility: visible; }
+
+/* Ranking: no card. A proportional share bar above a compact list. Each of the top sites has its own color so the
+   segments are easy to tell apart (ordered so neighbouring colors differ a lot); the rest share a neutral gray. */
+.ranking {
+  --c1: #6366f1; --c2: #f59e0b; --c3: #10b981; --c4: #f43f5e; --c5: #0ea5e9; --c6: #a855f7; --c7: #14b8a6;
+  --c-rest: var(--muted);
+  padding: 20px 4px 0; animation: rise .4s ease .15s both;
+}
+.ranking h2 { margin: 0 0 14px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.share { display: flex; gap: 3px; height: 10px; margin-bottom: 14px; }
+.share span { min-width: 4px; border-radius: var(--r-xs); background: var(--c-rest); }
+.sites li { display: grid; grid-template-columns: 8px 24px 1fr auto 44px; align-items: center; gap: 12px; padding: 9px 0; }
+.sites li + li { border-top: 1px solid var(--border); }
+.sites .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-rest); }
+/* Neutral letter tile (shown only when a site has no favicon); the real favicon covers it when it loads */
+.sites .icon { width: 24px; height: 24px; border-radius: var(--r-sm); background: var(--surface-2); color: var(--muted); font-size: 11px; }
+.sites .name { overflow: hidden; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.sites .count { font-weight: 650; font-variant-numeric: tabular-nums; }
+.sites .pct { font-size: 12px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- Footer ---------- */
+footer { margin-top: 20px; }
+.danger { padding: 6px 0; border: 0; background: none; color: var(--muted); font-size: 12px; transition: color .15s; }
+.danger:hover { color: #e5484d; }
+
+@media (max-width: 640px) {
+  .figures { grid-template-columns: repeat(2, 1fr); }
+  .range { min-width: 150px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .periods button.active { background: var(--border); box-shadow: none; }
+  /* Lighter variants so the segments stay vivid on the dark background */
+  .ranking { --c1: #818cf8; --c2: #fbbf24; --c3: #34d399; --c4: #fb7185; --c5: #38bdf8; --c6: #c084fc; --c7: #2dd4bf; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal, .figure, .block, .ranking { animation: none; }
+  .col .bar, .goal-meter .fill { transition: none; }
+}

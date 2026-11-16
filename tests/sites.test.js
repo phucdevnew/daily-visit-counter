@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { cleanDomain, hostOf, matchSite } from "../src/core/sites.js";
+import { cleanDomain, hostOf, matchSite } from "../extension/src/core/sites.js";
 
 test("cleanDomain normalizes URLs and user-entered domains", () => {
   assert.equal(cleanDomain("https://www.Facebook.com/abc?x=1"), "facebook.com");

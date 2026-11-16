@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { csvCell, exportFilename, visitsToCsv } from "../src/core/export.js";
+import { csvCell, exportFilename, visitsToCsv } from "../extension/src/core/export.js";
 
 const sites = ["facebook.com", "youtube.com"];
 const lines = (csv) => csv.split("\r\n");
