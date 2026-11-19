@@ -30,10 +30,32 @@ body { width: 340px; }
   box-shadow: 0 6px 16px rgba(225, 29, 72, .55), inset 0 1px 0 rgba(255, 255, 255, .35);
 }
 .auto { margin-top: 10px; font-size: 12px; text-align: center; opacity: .85; }
-#list { padding: 8px; max-height: 300px; overflow-y: auto; }
-footer { display: flex; gap: 8px; padding: 4px 12px 14px; }
+#list { padding: 8px; }
+footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 4px 12px 14px; }
 footer button {
-  flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: 7px 14px; border: 1px solid var(--border); border-radius: var(--r-md);
   background: var(--surface); font-weight: 600; transition: all .15s;
 }
+footer .icon-btn { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; }
+footer .icon-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 footer button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+/* Daily quote at the very top: a classic blockquote, i.e. an accent bar on the left, italic text, byline underneath */
+.quote { position: relative; margin: 0; padding: 14px 18px 14px 33px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.quote::before { content: ""; position: absolute; left: 18px; top: 14px; bottom: 14px; width: 3px; border-radius: var(--r-xs); background: var(--accent); }
+.quote blockquote { margin: 0; padding-right: 20px; } /* room for the shuffle button */
+.quote p { margin: 0; font-size: 14px; font-style: italic; font-weight: 500; line-height: 1.45; color: var(--text); }
+.quote cite { display: block; margin-top: 6px; font-size: 12px; font-style: normal; color: var(--muted); }
+.quote cite::before { content: "\2014\00a0"; }
+.quote-shuffle { position: absolute; top: 8px; right: 10px; display: grid; place-items: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: var(--r-sm); background: none; color: var(--muted); opacity: .55; transition: opacity .15s, color .15s, background .15s; }
+.quote-shuffle:hover { background: var(--surface-2); color: var(--accent); opacity: 1; }
+.quote-shuffle:focus-visible { outline: 2px solid var(--accent); opacity: 1; }
+.quote-shuffle svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Change against yesterday, shown under the big number on the colored header: red-ish = more, green = fewer */
+.big .delta[hidden] { display: none; }
+.big .delta span { font-size: inherit; font-weight: inherit; letter-spacing: normal; line-height: 1.2; }
+.big .delta svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; display: block; }
+.big .delta { display: inline-flex; align-items: center; gap: 4px; align-self: baseline; padding: 3px 8px; font-variant-numeric: tabular-nums; white-space: nowrap; border-radius: var(--r-sm); background: rgba(255, 255, 255, .16); font-size: 12px; font-weight: 600; color: #fff; }
+.delta.up { background: rgba(255, 120, 120, .34); }
+.delta.down { background: rgba(74, 222, 128, .3); }

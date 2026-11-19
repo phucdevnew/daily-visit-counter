@@ -124,3 +124,14 @@ export function goalMeter(today, limits) {
   const top = sortedEntries(today)[0];
   return { value: top ? top[1] : 0, max: limits.perSite, site: top ? top[0] : null };
 }
+
+/**
+ * Today's total against yesterday's (both only count the tracked sites): { today, yesterday, diff }.
+ * `diff` > 0 means more distracting visits than yesterday, < 0 fewer. Used by the popup.
+ */
+export function compareDays(visits, sites, dateKey = todayKey()) {
+  const total = (key) => sumCounts(collapse(visits[key], sites));
+  const today = total(dateKey);
+  const yesterday = total(keyOf(addDays(parseKey(dateKey), -1)));
+  return { today, yesterday, diff: today - yesterday };
+}

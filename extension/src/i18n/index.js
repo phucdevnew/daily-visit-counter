@@ -2,8 +2,9 @@
 // Works both in the service worker (no `document`) and in UI pages.
 //
 // ADDING A NEW LANGUAGE:
-//   1. Create src/i18n/<code>.js (copy en.js, translate values, KEEP keys unchanged).
-//   2. Import it into DICTIONARIES below.
+//   1. Create src/i18n/<code>.js (copy en.js, translate values, KEEP keys unchanged) and src/i18n/quotes/<code>.js
+//      (a list of short local proverbs about focus and diligence).
+//   2. Import both into DICTIONARIES and QUOTES below.
 //   3. Add an <option> in settings.html (General section). `npm run check` verifies all keys are present.
 //
 // In HTML: data-i18n (content), data-i18n-ph (placeholder), data-i18n-title, data-i18n-aria.
@@ -11,9 +12,13 @@
 
 import { changed, getLangPref, newLang, onStorageChanged } from "../core/storage.js";
 import en from "./en.js";
+import quotesEn from "./quotes/en.js";
+import quotesVi from "./quotes/vi.js";
 import vi from "./vi.js";
 
 const DICTIONARIES = { vi, en };
+// Daily quotes are lists, not keyed strings, and differ by culture rather than being translations of each other.
+const QUOTES = { vi: quotesVi, en: quotesEn };
 const FALLBACK = "en";
 
 let current = FALLBACK;
@@ -26,6 +31,9 @@ function resolveLang(pref) {
 }
 
 const setCurrent = (pref) => { current = resolveLang(pref); };
+
+/** The list of daily quotes for the current language (English if the language has none). */
+export const getQuotes = () => QUOTES[current] ?? QUOTES[FALLBACK];
 
 export const currentLang = () => current;
 export const currentLocale = () => (current === "vi" ? "vi-VN" : "en-US");

@@ -4,7 +4,15 @@ Chrome extension (Manifest V3) that counts how often you visit distracting websi
 while tracking is turned on, and helps you limit those visits.
 
 - **Intentional counting:** only the sites on your list are counted, and only while tracking is on (it can switch on/off automatically on a work schedule).
+- **Today vs yesterday** in the popup: under the big visit count, a small pill shows how many more (red-ish) or fewer (green) distracting
+  visits you have than yesterday.
 - **Statistics** by day / week / month / year, comparison with the previous period, and a streak of days within your goal.
+- **Daily quote** at the top of the popup, in the interface language: a proverb or idiom, a folk verse (Vietnamese "ca dao") or a
+  well-known quote. Every entry has the same layout with a byline underneath: the author for a quote, "Ca dao" for a folk verse, and a "Proverb" label (localized) for an anonymous saying. About 110-120 entries per language, in a random order that is
+  reshuffled every cycle: every entry appears once per cycle, never two days in a row, and it stays the same all day. Fully offline
+  (no network, nothing written to disk): the lists live in `extension/src/i18n/quotes/`, the order is computed from the date.
+  A tiny button in the corner of the quote shows a different random one; that choice is kept for the rest of the day in the
+  browser's session storage (cleared when Chrome closes) and resets the next day.
 - **CSV export** of the period you are viewing (Stats → Export CSV): `date,site,visits`, one row per day and site. It is a plain
   download from the extension page, so no extra permission is needed.
 - **Limits & reminders:** a notification when you reach a limit, and a "Hold on…" reminder screen before you enter a site.
@@ -39,11 +47,12 @@ extension/               THE EXTENSION — load this folder in Chrome; its conte
       sites.js  schedule.js  limits.js  counts.js  dates.js  consent.js
       stats-calc.js        calculations for the Stats page (periods, comparison, streaks)
       export.js            CSV export (escaping, formula-injection guard, file name)
+    quote.js             picks the quote of the day (seeded shuffle per cycle)
       routes.js            page paths
     background/            service worker, one responsibility per file
       index.js             only wires browser events to the modules
       counter.js  badge.js  notifications.js  nudge.js  scheduler.js  queue.js
-    i18n/                  index.js (engine) + vi.js, en.js (dictionaries)
+    i18n/                  index.js (engine) + vi.js, en.js (dictionaries); quotes/ (daily quote lists)
     ui/                    base.css (shared styles), dom.js (DOM helpers), favicon.js (finds a site's icon in Chrome's cache)
     pages/                 popup/  stats/  settings/ (+ sections/)  nudge/  consent/
 tests/                   node:test; tests/helpers/chrome-mock.js mocks chrome.*
@@ -75,6 +84,9 @@ When you change the data structure, bump `SCHEMA_VERSION` and write an upgrade s
   `settings.html`. `npm run check` reports missing keys.
 - **Add a settings section:** add `<section class="panel" data-section data-icon data-title-key>` to `settings.html`, write
   `extension/src/pages/settings/sections/<name>.js` and call it from `settings.js`. The menu updates automatically.
+- **Add or change daily quotes:** edit the list in `extension/src/i18n/quotes/<code>.js`. An entry is a plain string (anonymous
+  saying) or `{ text, author }` for a well-known quote. `npm run check` enforces non-empty, unique, trimmed text (max 100
+  characters) and an author of at most 40 characters. Only add an attribution you can verify; popular quotes are often misattributed.
 - **Add a text string:** add the key to both `vi.js` and `en.js`; use `data-i18n="key"` in HTML or `t("key")` in JS.
 
 ## Extension permissions

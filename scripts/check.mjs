@@ -165,6 +165,31 @@ for (const k of viKeys) {
   if (!used.has(k) && !dynamic && !allText.includes(`"${k}"`)) warnings.push(`i18n: key "${k}" appears unused`);
 }
 
+// ---- 5. daily quotes ----
+// Each language needs a list of short, unique entries (they are shown in a narrow popup). An entry is a plain string
+// (anonymous proverb or folk verse) or { text, author } for a well-known quote.
+const MAX_QUOTE_LENGTH = 100;
+const MAX_AUTHOR_LENGTH = 40;
+for (const lang of ["vi", "en"]) {
+  const quotes = (await import(pathToFileURL(join(extRoot, "src/i18n/quotes", `${lang}.js`)))).default;
+  if (!Array.isArray(quotes) || quotes.length < 7) { fail(`quotes/${lang}.js: needs an array with at least 7 quotes`); continue; }
+  const seen = new Set();
+  for (const entry of quotes) {
+    const plain = typeof entry === "string";
+    const text = plain ? entry : entry?.text;
+    if (typeof text !== "string" || text !== text.trim() || !text) { fail(`quotes/${lang}.js: invalid quote ${JSON.stringify(entry)}`); continue; }
+    if (!plain) {
+      const { author } = entry;
+      if (typeof author !== "string" || author !== author.trim() || !author || author.length > MAX_AUTHOR_LENGTH) {
+        fail(`quotes/${lang}.js: invalid author for "${text}" (non-empty, trimmed, max ${MAX_AUTHOR_LENGTH} characters)`);
+      }
+    }
+    if (text.length > MAX_QUOTE_LENGTH) fail(`quotes/${lang}.js: too long (${text.length} > ${MAX_QUOTE_LENGTH}): "${text}"`);
+    if (seen.has(text)) fail(`quotes/${lang}.js: duplicate quote "${text}"`);
+    seen.add(text);
+  }
+}
+
 // ---- Result ----
 for (const w of warnings) console.warn(`⚠️  ${w}`);
 if (errors.length) {

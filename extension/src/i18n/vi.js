@@ -4,7 +4,7 @@ export default {
   "nav.stats": "📊 Thống kê",
   "nav.settings": "⚙️ Cài đặt",
 
-  "popup.today_label": "lượt xao nhãng hôm nay",
+  "popup.today_label": "lần xao nhãng",
   "popup.sites": "<b>{n}</b> website",
   "popup.top": "Nhiều nhất: <b>{site}</b>",
   "popup.status_on": "Đang tracking",
@@ -15,6 +15,11 @@ export default {
   "popup.auto": "⏰ Tự động {parts}",
   "popup.auto_start": "bật {t}",
   "popup.auto_end": "dừng {t}",
+  "popup.quote_proverb": "Tục ngữ",
+  "popup.quote_change": "Đổi câu khác",
+  "popup.delta_up": "▲ Tăng {n} so với hôm qua",
+  "popup.delta_down": "▼ Giảm {n} so với hôm qua",
+  "popup.delta_same": "Bằng hôm qua",
 
   "stats.page_title": "Thống kê truy cập",
   "stats.tagline": "Bạn dành thời gian ở đâu mỗi ngày?",

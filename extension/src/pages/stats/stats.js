@@ -50,10 +50,14 @@ function renderChart(buckets) {
     const bar = document.createElement("div");
     bar.className = "bar";
     bar.style.height = `${(b.n / max) * 100}%`;
+    // The bar sits in its own plot area so its % height is relative to the space left after the value and label rows.
+    const plot = document.createElement("div");
+    plot.className = "plot";
+    plot.append(bar);
     const lbl = document.createElement("div");
     lbl.className = "lbl";
     lbl.textContent = bucketLabel(b);
-    col.append(val, bar, lbl);
+    col.append(val, plot, lbl);
     return col;
   }));
 }

@@ -72,11 +72,12 @@ h1 { margin: 0; font-size: 24px; font-weight: 650; letter-spacing: -.02em; }
 /* Trend chart: soft bars, the highest one (and the hovered one) in full accent */
 .chart { display: flex; align-items: flex-end; gap: 6px; height: 150px; }
 .col { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.col .plot { flex: 1; min-height: 0; width: 100%; display: flex; justify-content: center; align-items: flex-end; }
 .col .bar { width: 100%; max-width: 28px; min-height: 3px; border-radius: var(--r-sm) var(--r-sm) var(--r-xs) var(--r-xs); background: var(--bar-track); transition: height .35s ease, background .15s, opacity .15s; }
 .col.has .bar { background: var(--accent); opacity: .3; }
 .col.peak .bar, .col:hover .bar { background: var(--accent); opacity: 1; }
-.col .lbl { height: 12px; font-size: 10px; color: var(--muted); white-space: nowrap; }
-.col .val { height: 12px; font-size: 10px; font-weight: 600; visibility: hidden; }
+.col .lbl { flex-shrink: 0; height: 12px; font-size: 10px; color: var(--muted); white-space: nowrap; }
+.col .val { flex-shrink: 0; height: 12px; font-size: 10px; font-weight: 600; visibility: hidden; }
 .col:hover .val, .col.peak .val { visibility: visible; }
 
 /* Ranking: no card. A proportional share bar above a compact list. Each of the top sites has its own color so the

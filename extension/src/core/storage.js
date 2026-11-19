@@ -9,7 +9,8 @@
 //   lang     "auto" | "vi" | "en"                            UI language
 //   scheduleLastRun  number (ms)                             last time the schedule was evaluated (to catch up on missed times)
 //   schemaVersion    number                                  data schema version
-// chrome.storage.session (lost when the browser closes): per-tab state.
+// chrome.storage.session (lost when the browser closes): per-tab state, and quoteOverride { date, lang, index } = the quote the
+// user picked by hand for today (see quote.js).
 
 import { isConsentValid, newConsent } from "./consent.js";
 import { normalizeLimits } from "./limits.js";
@@ -140,3 +141,10 @@ export const clearAllowedSite = (tabId) => session.remove(allowKey(tabId));
 
 /** Forgets all state of a tab (when the tab closes). */
 export const forgetTab = (tabId) => session.remove([tabKey(tabId), allowKey(tabId)]);
+
+// ---- The quote the user picked by hand (session storage: kept for the day, never written to disk) ----
+const QUOTE_OVERRIDE_KEY = "quoteOverride";
+export async function getQuoteOverride() {
+  return (await session.get(QUOTE_OVERRIDE_KEY))[QUOTE_OVERRIDE_KEY] ?? null;
+}
+export const setQuoteOverride = (override) => session.set({ [QUOTE_OVERRIDE_KEY]: override });

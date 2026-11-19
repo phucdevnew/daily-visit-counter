@@ -4,7 +4,7 @@ export default {
   "nav.stats": "📊 Stats",
   "nav.settings": "⚙️ Settings",
 
-  "popup.today_label": "distracting visits today",
+  "popup.today_label": "distractions",
   "popup.sites": "<b>{n}</b> sites",
   "popup.top": "Top: <b>{site}</b>",
   "popup.status_on": "Tracking",
@@ -15,6 +15,11 @@ export default {
   "popup.auto": "⏰ Auto: {parts}",
   "popup.auto_start": "start {t}",
   "popup.auto_end": "stop {t}",
+  "popup.quote_proverb": "Proverb",
+  "popup.quote_change": "Show another quote",
+  "popup.delta_up": "▲ {n} more than yesterday",
+  "popup.delta_down": "▼ {n} fewer than yesterday",
+  "popup.delta_same": "Same as yesterday",
 
   "stats.page_title": "Visit statistics",
   "stats.tagline": "Where does your time go each day?",

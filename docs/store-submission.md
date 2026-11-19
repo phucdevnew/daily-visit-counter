@@ -38,6 +38,7 @@ WHAT YOU GET
 • Export the period you are viewing as a CSV file (date, site, visits) for your own records or a spreadsheet.
 • Daily limits: set a maximum for all watched sites together and for each site. Get a notification — and a red badge on the icon — when you reach it.
 • Optional "Hold on…" reminder: before you enter a watched site, a short pause screen shows which visit this will be today. You can go back to work or continue.
+• A short daily proverb, folk verse or well-known quote at the top of the popup to keep you focused and motivated.
 • English and Vietnamese interface.
 
 PRIVACY FIRST
@@ -87,7 +88,7 @@ Do not tick: PII, health, financial, authentication, personal communications, lo
 The extension does nothing until the user agrees and turns tracking on, so please follow these steps (about 3 minutes):
 
 1. After installing, a privacy screen opens. Read it and click "Agree and continue". (It can be reopened from Settings → Privacy.)
-2. Click the extension icon. Click the green "Start tracking" button. The status turns to "Tracking" and the icon shows "ON".
+2. Click the extension icon (a short daily proverb is shown at the top of the popup). Click the green "Start tracking" button. The status turns to "Tracking" and the icon shows "ON".
 3. Open https://www.facebook.com in a tab (no login needed). Click the extension icon: today's total shows 1 and facebook.com appears in the list.
    Navigating inside the same site does not add a visit; opening it again from another site (or a new tab) does.
 4. Click "Stats" in the popup to see day/week/month/year statistics. "Export CSV" downloads the period shown as a CSV file.

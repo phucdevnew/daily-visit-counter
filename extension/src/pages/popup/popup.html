@@ -6,12 +6,21 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+  <figure class="quote" id="quote" hidden>
+    <blockquote><p id="quoteText"></p><cite id="quoteAuthor"></cite></blockquote>
+    <button type="button" class="quote-shuffle" id="quoteShuffle" data-i18n-title="popup.quote_change" data-i18n-aria="popup.quote_change">
+      <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true">
+        <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+        <polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+      </svg>
+    </button>
+  </figure>
   <section class="hero">
     <div class="topline">
       <div class="eyebrow" id="date"></div>
       <div class="status" id="status"><i class="dot"></i><span id="statusText"></span></div>
     </div>
-    <div class="big"><span id="total">0</span><small data-i18n="popup.today_label"></small></div>
+    <div class="big"><span id="total">0</span><small data-i18n="popup.today_label"></small><b class="delta" id="delta" hidden></b></div>
     <button class="toggle" id="toggle"></button>
     <div class="auto" id="auto" hidden></div>
   </section>
@@ -23,7 +32,9 @@
   <div class="empty" id="empty" hidden><span class="emoji">🌤️</span><span data-i18n="popup.empty"></span></div>
   <footer>
     <button id="stats" data-i18n="nav.stats"></button>
-    <button id="settings" data-i18n="nav.settings"></button>
+    <button id="settings" class="icon-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
   </footer>
   <script type="module" src="popup.js"></script>
 </body>

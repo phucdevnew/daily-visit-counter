@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { collapse } from "../extension/src/core/counts.js";
 import { keyOf } from "../extension/src/core/dates.js";
 import {
-  aggregate, buildBuckets, compareWithPrevious, dayMeetsGoal, elapsedDays, goalMeter, goalState, rangeFor,
+  aggregate, buildBuckets, compareDays, compareWithPrevious, dayMeetsGoal, elapsedDays, goalMeter, goalState, rangeFor,
   shiftAnchor,
 } from "../extension/src/core/stats-calc.js";
 
@@ -120,4 +120,23 @@ test("goalMeter prefers the total limit, otherwise takes the top site", () => {
   assert.deepEqual(goalMeter({ a: 2, b: 1 }, { total: 5, perSite: 3 }), { value: 3, max: 5, site: null });
   assert.deepEqual(goalMeter({ a: 2, b: 1 }, { total: 0, perSite: 3 }), { value: 2, max: 3, site: "a" });
   assert.deepEqual(goalMeter({}, { total: 0, perSite: 3 }), { value: 0, max: 3, site: null });
+});
+
+test("compareDays: more, fewer, same, and an empty day", () => {
+  const visits = {
+    "2026-11-15": { "facebook.com": 2, "youtube.com": 3 }, // yesterday: 5
+    "2026-11-16": { "facebook.com": 6, "m.facebook.com": 2, "google.com": 40 }, // today: 8 (google is not tracked)
+  };
+  assert.deepEqual(compareDays(visits, sites, "2026-11-16"), { today: 8, yesterday: 5, diff: 3 });
+  assert.deepEqual(compareDays(visits, sites, "2026-11-15"), { today: 5, yesterday: 0, diff: 5 }); // nothing the day before
+  assert.deepEqual(compareDays({ "2026-11-15": { "facebook.com": 9 }, "2026-11-16": { "facebook.com": 4 } }, sites, "2026-11-16").diff, -5);
+  assert.deepEqual(compareDays({ "2026-11-15": { "facebook.com": 4 }, "2026-11-16": { "youtube.com": 4 } }, sites, "2026-11-16").diff, 0);
+  assert.deepEqual(compareDays({}, sites, "2026-11-16"), { today: 0, yesterday: 0, diff: 0 });
+});
+
+test("compareDays looks back across month and year boundaries", () => {
+  const visits = { "2026-11-30": { "facebook.com": 7 }, "2026-12-01": { "facebook.com": 2 }, "2026-12-31": { "facebook.com": 1 }, "2027-01-01": { "facebook.com": 4 } };
+  assert.equal(compareDays(visits, sites, "2026-12-01").yesterday, 7);
+  assert.equal(compareDays(visits, sites, "2027-01-01").yesterday, 1);
+  assert.equal(compareDays(visits, sites, "2027-01-01").diff, 3);
 });
